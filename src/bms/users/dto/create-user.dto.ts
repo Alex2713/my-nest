@@ -1,7 +1,6 @@
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class CreateUserDto {
-    readonly id?: string;
 
     @IsNotEmpty()
     readonly username: string;
@@ -16,4 +15,6 @@ export class CreateUserDto {
     readonly remark?: string;
 
     readonly status?: number;
+
+    readonly [key: string]: any;
 }

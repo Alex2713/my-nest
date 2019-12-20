@@ -10,7 +10,7 @@ export class BmsController {
     @UseGuards(AuthGuard('local'))
     @Post('auth/login')
     async login(@Request() req) {
-        return this.authService.login(req.user);
+        return this.authService.login(req.user._doc);
     }
 
     @UseGuards(AuthGuard('jwt'))

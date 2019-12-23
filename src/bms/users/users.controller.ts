@@ -4,6 +4,7 @@ import { User } from './interfaces/user.interface';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../guards/roles.guard';
+import { BcryptHasher } from '../auth/hash.password.bcryptjs';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('users')
@@ -11,12 +12,17 @@ export class UsersController {
 
     constructor(
         private readonly userService: UsersService,
+        private readonly passwordHasher: BcryptHasher,
     ) { }
 
     @UseGuards(RolesGuard)
     @Post()
     async create(@Body() createUserDto: CreateUserDto) {
-        return await this.userService.create(createUserDto);
+        const nn = {
+            ...createUserDto,
+            password: await this.passwordHasher.hashPassword(createUserDto.password),
+        }
+        return await this.userService.create(nn as CreateUserDto);
     }
 
     @UseGuards(RolesGuard)

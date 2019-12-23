@@ -1,9 +1,8 @@
 import * as mongoose from 'mongoose';
-
+// mongoose.set('useCreateIndex', true);
 export const LoggerSchema = new mongoose.Schema({
-    _id: String,
-    username: String,
-    userid: String,
-    method: String,
-    url: String,
+    username: { type: String, required: true },
+    userId: { type: String, required: true },
+    method: { type: String, required: true },
+    url: { type: String, required: true },
 });

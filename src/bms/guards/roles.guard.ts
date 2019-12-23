@@ -18,6 +18,7 @@ export class RolesGuard implements CanActivate {
         const url1 = request.url;
         const method1 = request.method.toLowerCase();
         const user = request.user;
+        console.log(user);
         this.loggerService.create({
             username: user.username,
             userId: user.userId,

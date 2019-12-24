@@ -2,6 +2,8 @@ import { Document } from 'mongoose';
 
 export interface Logger extends Document {
 
+    readonly _id: string;
+
     readonly userId: string;
 
     readonly username: string;

@@ -20,8 +20,8 @@ export class UsersController {
     async create(@Body() createUserDto: CreateUserDto) {
         const nn = {
             ...createUserDto,
-            password: await this.passwordHasher.hashPassword(createUserDto.password),
-        }
+            password: await this.passwordHasher.hashPassword(createUserDto.username),
+        };
         return await this.userService.create(nn as CreateUserDto);
     }
 

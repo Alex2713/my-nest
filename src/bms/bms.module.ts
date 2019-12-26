@@ -10,7 +10,12 @@ import { LoggerModule } from './logger/logger.module';
     UsersModule,
     AuthModule,
     MongooseModule.forRoot('mongodb://alex:123456@localhost:27017/nest',
-      { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+      },
     ),
     LoggerModule,
   ],

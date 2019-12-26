@@ -8,7 +8,7 @@ export class CreateUserDto {
     @IsEmail()
     readonly email?: string;
 
-    @IsPhoneNumber('+86')
+    @IsPhoneNumber('CN')
     readonly phone?: string;
 
     readonly remark?: string;

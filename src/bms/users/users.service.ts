@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
+import { AnyObject } from 'src/interfaces/common.interface';
 
 @Injectable()
 export class UsersService {
@@ -14,8 +15,18 @@ export class UsersService {
         return await createdCat.save();
     }
 
-    async findAll(): Promise<User[]> {
-        return await this.userModel.find().exec();
+    async findAll(filter: AnyObject): Promise<User[]> {
+        return await this.userModel.find()
+            .where({
+                ...filter,
+                username: new RegExp(`^${filter.username || ''}`),
+                email: new RegExp(`^${filter.email || ''}`),
+                phone: new RegExp(`^${filter.phone || ''}`),
+            }).exec();
+    }
+
+    async update(id: string, user: User): Promise<User[]> {
+        return await this.userModel.findByIdAndUpdate(id, user);
     }
 
     async findOne(name: string): Promise<User> {

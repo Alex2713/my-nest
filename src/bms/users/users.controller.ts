@@ -6,7 +6,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../guards/roles.guard';
 import { BcryptHasher } from '../auth/hash.password.bcryptjs';
 import { AnyObject } from 'src/interfaces/common.interface';
-import { of } from 'rxjs';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('users')

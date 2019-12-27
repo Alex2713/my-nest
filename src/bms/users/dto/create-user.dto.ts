@@ -6,10 +6,10 @@ export class CreateUserDto {
     readonly username: string;
 
     @IsEmail()
-    readonly email?: string;
+    readonly email: string;
 
     @IsPhoneNumber('CN')
-    readonly phone?: string;
+    readonly phone: string;
 
     readonly remark?: string;
 

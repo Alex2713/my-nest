@@ -15,15 +15,18 @@ export class RolesGuard implements CanActivate {
     ): boolean | Promise<boolean> | Observable<boolean> {
         const request = context.switchToHttp().getRequest();
         // const resource = this.reflector.get<string[]>('resource', context.getHandler());
-        const url1 = request.url;
+        this.addLogger(request);
+        return true;
+    }
+    async addLogger(request: any): Promise<void> {
+        const path = request.path;
         const method1 = request.method.toLowerCase();
-        const user = request.user;
-        this.loggerService.create({
+        const user = request.user || {};
+        await this.loggerService.create({
             username: user.username,
             userId: user.userId,
             method: method1,
-            url: url1,
+            url: path,
         });
-        return true;
     }
 }

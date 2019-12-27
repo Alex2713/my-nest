@@ -1,5 +1,5 @@
 import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,17 +12,22 @@ export class UsersService {
 
     async create(createCatDto: CreateUserDto): Promise<User> {
         const createdCat = new this.userModel(createCatDto);
-        return await createdCat.save();
+        try {
+            return await createdCat.save();
+        } catch (error) {
+            throw new HttpException(error, HttpStatus.BAD_REQUEST);
+        }
     }
 
     async findAll(filter: AnyObject): Promise<User[]> {
+        const param = {
+            ...filter,
+            username: new RegExp(`^${filter.username || ''}`),
+            email: new RegExp(`^${filter.email || ''}`),
+            phone: new RegExp(`^${filter.phone || ''}`),
+        };
         return await this.userModel.find()
-            .where({
-                ...filter,
-                username: new RegExp(`^${filter.username || ''}`),
-                email: new RegExp(`^${filter.email || ''}`),
-                phone: new RegExp(`^${filter.phone || ''}`),
-            }).exec();
+            .find(param).exec();
     }
 
     async update(id: string, user: User): Promise<User[]> {

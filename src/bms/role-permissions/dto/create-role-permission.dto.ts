@@ -1,10 +1,11 @@
 import { IsNotEmpty } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CreateRolePermissionDto {
 
     @IsNotEmpty()
-    readonly roleId: string;
+    readonly roleId: Schema.Types.ObjectId;
 
     @IsNotEmpty()
-    readonly permissionId: string;
+    readonly permissionId: Schema.Types.ObjectId;
 }

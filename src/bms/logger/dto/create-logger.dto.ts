@@ -1,8 +1,8 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Schema } from 'mongoose';
 
 export class CreateLoggerDto {
 
-    readonly userId: string;
+    readonly userId: Schema.Types.ObjectId;
 
     readonly username: string;
 

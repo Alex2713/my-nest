@@ -1,7 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface RolePermission extends Document {
-    readonly _id: string;
-    readonly roleId: string;
-    readonly permissionId: string;
+    readonly roleId: Schema.Types.ObjectId;
+    readonly permissionId: Schema.Types.ObjectId;
 }

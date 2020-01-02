@@ -5,7 +5,6 @@ export class CreatePermissionDto {
     @IsNotEmpty()
     readonly name: string;
 
-    @IsNotEmpty()
     readonly remark: string;
 
     @IsNotEmpty()

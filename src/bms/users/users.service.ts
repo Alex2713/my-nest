@@ -4,11 +4,16 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AnyObject } from 'src/interfaces/common.interface';
+import { UserRolesService } from '../user-roles/user-roles.service';
+import { RolePermissionsService } from '../role-permissions/role-permissions.service';
 
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
+    constructor(
+        @InjectModel('User') private readonly userModel: Model<User>,
+        private readonly userRolesService: UserRolesService,
+        private readonly rolePermissionsService: RolePermissionsService, ) { }
 
     async create(createCatDto: CreateUserDto): Promise<User> {
         const createdCat = new this.userModel(createCatDto);
@@ -30,7 +35,7 @@ export class UsersService {
             .find(param).exec();
     }
 
-    async update(id: string, user: User): Promise<User[]> {
+    async update(id: string, user: User): Promise<User> {
         return await this.userModel.findByIdAndUpdate(id, user);
     }
 
@@ -38,5 +43,18 @@ export class UsersService {
         return await this.userModel.findOne({
             username: name,
         }).exec();
+    }
+
+    /**
+     * 根据用户id获取用户的权限列表
+     * @param uid 用户id
+     */
+    async getRolesPermissionsById(uid: string): Promise<any[]> {
+        const roles = await this.userRolesService.findByUserId(uid);
+        return Promise.all(
+            roles.map(async role => {
+                return await this.rolePermissionsService.findByRoleId(role.id);
+            }),
+        );
     }
 }

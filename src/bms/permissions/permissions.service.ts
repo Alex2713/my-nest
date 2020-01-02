@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Permission } from './interfaces/permission.interface';
@@ -26,5 +26,9 @@ export class PermissionsService {
         };
         return await this.permissionModel.find()
             .find(param).exec();
+    }
+
+    async findById(id: Schema.Types.ObjectId): Promise<Permission> {
+        return await this.permissionModel.findById(id).exec();
     }
 }

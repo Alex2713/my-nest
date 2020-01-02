@@ -1,7 +1,7 @@
 import { Controller, UseGuards, Post, Body, Get, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { PermissionsService } from './permissions.service';
-import { RolesGuard } from '../guards/roles.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { Permission } from './interfaces/permission.interface';
 import { AnyObject } from 'src/interfaces/common.interface';

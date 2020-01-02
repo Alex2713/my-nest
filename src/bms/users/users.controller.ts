@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './interfaces/user.interface';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { RolesGuard } from '../guards/roles.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { BcryptHasher } from '../auth/hash.password.bcryptjs';
 import { AnyObject } from 'src/interfaces/common.interface';
 

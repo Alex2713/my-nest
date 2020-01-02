@@ -1,7 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface Permission extends Document {
-    readonly _id: string;
     readonly name: string;
     readonly url: string;
     readonly method: string;

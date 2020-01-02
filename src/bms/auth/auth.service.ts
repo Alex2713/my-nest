@@ -23,7 +23,7 @@ export class AuthService {
     }
 
     async login(user: User) {
-        const payload = { username: user.username, sub: user._id };
+        const payload = { username: user.username, sub: user.id };
         return {
             canUse: await this.passwordHasher.comparePassword(user.username, user.password) ? false : true,
             access_token: this.jwtService.sign(payload),

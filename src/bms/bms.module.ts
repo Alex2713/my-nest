@@ -13,14 +13,6 @@ import { RolePermissionsModule } from './role-permissions/role-permissions.modul
   imports: [
     UsersModule,
     AuthModule,
-    MongooseModule.forRoot('mongodb://alex:123456@localhost:27017/nest',
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-      },
-    ),
     LoggerModule,
     PermissionsModule,
     RolesModule,

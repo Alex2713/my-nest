@@ -1,7 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface UserRole extends Document {
-    readonly _id: string;
-    readonly userId: string;
-    readonly roleId: string;
+    readonly userId: Schema.Types.ObjectId;
+    readonly roleId: Schema.Types.ObjectId;
 }

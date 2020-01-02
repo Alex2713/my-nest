@@ -3,7 +3,7 @@ import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { Role } from './interfaces/role.interface';
 import { AnyObject } from 'src/interfaces/common.interface';
-import { RolesGuard } from '../guards/roles.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
 
 @UseGuards(AuthGuard('jwt'))

@@ -1,4 +1,4 @@
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Role } from './interfaces/role.interface';
@@ -26,5 +26,9 @@ export class RolesService {
         };
         return await this.roleModel.find()
             .find(param).exec();
+    }
+
+    async findById(id: Schema.Types.ObjectId): Promise<Role> {
+        return await this.roleModel.findById(id).exec();
     }
 }

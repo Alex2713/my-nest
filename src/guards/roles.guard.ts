@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 import { LoggerService } from '../bms/logger/logger.service';
@@ -21,6 +21,12 @@ export class RolesGuard implements CanActivate {
         const method1 = request.method.toLowerCase();
         const user = request.user || {};
         const userPermissions = await this.userService.getRolesPermissionsById(user.userId);
+        const isPermission = userPermissions.find(up => {
+            return up.method === method1 && up.url === path;
+        });
+        if (!isPermission) {
+            throw new HttpException('无操作权限', HttpStatus.FORBIDDEN);
+        }
         this.addLogger(request);
         return true;
     }

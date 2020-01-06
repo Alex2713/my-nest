@@ -13,7 +13,7 @@ export class UsersService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
         private readonly userRolesService: UserRolesService,
-        private readonly rolePermissionsService: RolePermissionsService, ) { }
+        private readonly rolePermissionsService: RolePermissionsService) { }
 
     async create(createCatDto: CreateUserDto): Promise<User> {
         const createdCat = new this.userModel(createCatDto);
@@ -31,8 +31,7 @@ export class UsersService {
             email: new RegExp(`^${filter.email || ''}`),
             phone: new RegExp(`^${filter.phone || ''}`),
         };
-        return await this.userModel.find()
-            .find(param).exec();
+        return await this.userModel.find(param).exec();
     }
 
     async update(id: string, user: User): Promise<User> {
@@ -51,10 +50,18 @@ export class UsersService {
      */
     async getRolesPermissionsById(uid: string): Promise<any[]> {
         const roles = await this.userRolesService.findByUserId(uid);
-        return Promise.all(
+        const rsl = [];
+        await Promise.all(
             roles.map(async role => {
                 return await this.rolePermissionsService.findByRoleId(role.id);
             }),
-        );
+        ).then((fPs) => {
+            fPs.forEach(fP => {
+                fP.forEach(permission => {
+                    rsl.push(permission);
+                });
+            });
+        });
+        return rsl;
     }
 }
